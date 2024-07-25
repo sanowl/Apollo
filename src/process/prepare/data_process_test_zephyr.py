@@ -1,10 +1,10 @@
 import argparse
 import json
 import os
-import random
 
 
 from transformers import AutoModelForCausalLM, AutoTokenizer, AutoModel
+import secrets
 
 question_prompt_en_choice_shot = """User:You are a medical doctor answering real-world medical exam questions. Select one correct answer from A to D.
 Question: {question}
@@ -134,7 +134,7 @@ def preprocess(args):
             question_prompt = question_prompt_en_pubmed
             
         for item in items:
-            random_samples = random.sample(items, args.few_shot+1)
+            random_samples = secrets.SystemRandom().sample(items, args.few_shot+1)
             question = ''
             tmp_dict = {}
             # in case item in random_samples
