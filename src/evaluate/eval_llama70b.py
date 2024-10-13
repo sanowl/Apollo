@@ -109,18 +109,17 @@ def generate_response(args):
 
     
     model_path = args.model_path
+    with open(args.output_path,'w') as fp:
 
-    fp = open(args.output_path,'w')
+        with open(args.input_path) as f:
+            data = json.load(f)
 
-    with open(args.input_path) as f:
-        data = json.load(f)
-
-        for item in tqdm(data):
-            question=item['question']
-            answer=get_answer(question)
-            item['model_answer']=answer
-            fp.write(json.dumps(item, ensure_ascii=False) +'\n')
-            fp.flush()
+            for item in tqdm(data):
+                question=item['question']
+                answer=get_answer(question)
+                item['model_answer']=answer
+                fp.write(json.dumps(item, ensure_ascii=False) +'\n')
+                fp.flush()
 
 
 if __name__ == "__main__":
