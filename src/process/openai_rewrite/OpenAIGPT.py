@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import openai
 from retrying import retry
-import random
+import secrets
 
 class OpenAIGPT:
     def __init__(self, model_name="gpt-3.5-turbo", keys_path=None):
@@ -17,7 +17,7 @@ class OpenAIGPT:
         if message is None or message == "":
             return False, "Your input is empty."
 
-        current_key = random.choice(self.keys)
+        current_key = secrets.choice(self.keys)
         openai.api_key = current_key
         # openai.organization = "org-DvpMM9lXmpMxnaygs1ixEvZw"
         response = openai.ChatCompletion.create(
