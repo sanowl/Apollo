@@ -95,21 +95,17 @@ def generate_score(result_path, score_path, wrong_item_path):
     
 
 def generate_response(args,llm):
+    with open(args.output_path,'w') as fp:
 
-    
-    # model_path = args.model_path
+        with open(args.input_path) as f:
+            data = json.load(f)
 
-    fp = open(args.output_path,'w')
-
-    with open(args.input_path) as f:
-        data = json.load(f)
-
-        for item in tqdm(data):
-            question=item['question']
-            answer=get_answer(question,llm)
-            item['model_answer']=answer
-            fp.write(json.dumps(item, ensure_ascii=False) +'\n')
-            fp.flush()
+            for item in tqdm(data):
+                question=item['question']
+                answer=get_answer(question,llm)
+                item['model_answer']=answer
+                fp.write(json.dumps(item, ensure_ascii=False) +'\n')
+                fp.flush()
 
 
 if __name__ == "__main__":
